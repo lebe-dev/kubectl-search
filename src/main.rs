@@ -26,10 +26,7 @@ fn main() {
         Some(("values", matches)) => {
             let search_mask = matches.get_one::<String>(SEARCH_MASK_ARG).unwrap();
 
-            println!("copy secrets from namespace '{namespace}' to vault '{vault_dest_path}'..");
-            println!("- filter secrets by mask: '{secret_mask}'");
-            println!("- ignore base64 errors: {ignore_base64_errors}");
-            println!("- ignore utf8-related errors: {ignore_utf8_errors}");
+            println!("find configmap values with mask '{search_mask}'..");
 
             check_required_env_vars(&vec!["KUBECONFIG"]);
 
@@ -52,10 +49,6 @@ fn init_logging(matches: &ArgMatches) {
 
     let logging_config = get_logging_config(log_level);
     log4rs::init_config(logging_config).expect("logging init error");
-}
-
-fn check_required_env_vars() {
-    check_required_env_vars(&vec!["KUBECONFIG"])
 }
 
 fn check_required_env_vars(required_vars: &Vec<&str>) {
