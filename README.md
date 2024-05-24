@@ -1,6 +1,6 @@
 # kubectl-search
 
-Search through config-maps and secrets.
+Search through config-maps.
 
 ## Usage
 
@@ -9,15 +9,29 @@ export KUBECONFIG=~/.kube/demo.kubeconfig
 
 alias ks=kubectl-search
 
-# Find all configmaps / secrets values which contains search mask
+# Find all configmaps values which contains search mask
 
-$ ks values [--search-secrets=false] "backup"
+$ ks values "backup"
 
 - ConfigMap: app-cm
   Keys:
   - 'BACKUP_SRV_HOST': 'app-backup-svc' 
   
-- Secret: app-cm
+- ConfigMap: another-app-cm
   Keys:
-  - 'BACKUP_USER': 'backup-user'
+  - 'BACKUP_USER': 'app-backup-svc'
+
 ```
+
+## How it works
+
+Tool uses `kubectl` to read data from kubernetes.
+
+## Safety
+
+Tool doesn't use any write or delete commands inside cluster.
+
+## Roadmap
+
+1. Search values in ConfigMaps
+2. Search values in Secrets
