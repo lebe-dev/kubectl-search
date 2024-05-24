@@ -1,0 +1,7 @@
+/.idea
+*.iml
+kubectl-search
+kubectl-search.log
+/manifests
+/out
+/target
