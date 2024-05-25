@@ -13,6 +13,7 @@ pub const LOG_LEVEL_DEFAULT_VALUE: &str = "off";
 
 pub const VALUES_COMMAND: &str = "values";
 
+pub const NAMESPACE_ARG: &str = "namespace";
 pub const SEARCH_MASK_ARG: &str = "mask";
 
 pub fn init_cli_app() -> ArgMatches {
@@ -39,10 +40,17 @@ pub fn init_cli_app() -> ArgMatches {
         .subcommand(
             Command::new(VALUES_COMMAND)
                 .about("search values by mask")
+                .arg(get_k8s_namespace_arg())
                 .arg(get_search_mask_arg())
 
         )
         .get_matches()
+}
+
+fn get_k8s_namespace_arg() -> Arg {
+    Arg::new(NAMESPACE_ARG)
+        .help("kubernetes namespace. Example: demo")
+        .required(true)
 }
 
 fn get_search_mask_arg() -> Arg {

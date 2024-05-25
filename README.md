@@ -11,7 +11,8 @@ alias ks=kubectl-search
 
 # Find all configmaps values which contains search mask
 
-$ ks values "backup"
+# ks values <namespace> <search-mask>
+$ ks values apps "backup"
 
 - ConfigMap: app-cm
   Keys:

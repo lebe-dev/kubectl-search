@@ -12,7 +12,7 @@ pub fn print_search_results(search_results: &Vec<SearchResult>, search_mask: &st
         for search_result in search_results {
             println!("- config-map: '{}'", search_result.resource_name);
 
-            for (k, v) in search_result.values {
+            for (k, v) in &search_result.values {
                 println!("  - '{k}': '{v}'")
             }
         }
