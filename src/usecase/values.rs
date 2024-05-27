@@ -22,6 +22,11 @@ pub fn search_values_in_configmaps(
 
             let mut results: Vec<SearchResult> = vec![];
 
+            let names: Vec<String> = names.into_iter().filter(|n| {
+                let name = n.trim();
+                !name.is_empty()
+            }).collect::<Vec<String>>();
+
             for configmap_name in names {
                 match kubectl_configmap_tool.get_configmap_key_values(&namespace, &configmap_name) {
                     Ok(config_map_values) => {
