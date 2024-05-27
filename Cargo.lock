@@ -319,9 +319,10 @@ dependencies = [
 
 [[package]]
 name = "kubectl-wrapper-rs"
-version = "0.12.0"
-source = "git+https://gitlab.com/weird-crates/kubectl-wrapper-rs#cb1cb7c51518feeafab933675e9946e5a713ceb6"
+version = "0.13.0"
+source = "git+https://gitlab.com/weird-crates/kubectl-wrapper-rs#ee6b6cb7ec60cb567abd34a104226dc9a7f64590"
 dependencies = [
+ "base64",
  "chrono",
  "derive_more",
  "log",
