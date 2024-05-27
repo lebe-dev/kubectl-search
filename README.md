@@ -34,5 +34,6 @@ Tool doesn't use any write or delete commands inside cluster.
 
 ## Roadmap
 
-1. Search values in ConfigMaps
-2. Search values in Secrets
+1. Search values in Secrets
+2. Search values in Vault secret values
+3. Support cache
