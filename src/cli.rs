@@ -18,7 +18,7 @@ pub const SEARCH_MASK_ARG: &str = "mask";
 
 pub fn init_cli_app() -> ArgMatches {
     Command::new("kubectl-search")
-        .version("0.1.0")
+        .version("0.2.0")
         .author("Eugene Lebedev <eugene.0x90@gmail.com>")
         .about("Search tool for ConfigMaps and Secrets (Kubernetes)")
         .subcommand_required(true)
