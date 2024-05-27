@@ -10,10 +10,12 @@ pub fn print_search_results(search_results: &Vec<SearchResult>, search_mask: &st
 
     } else {
         for search_result in search_results {
-            println!("- config-map: '{}'", search_result.resource_name);
+            if !search_result.values.is_empty() {
+                println!("- config-map: '{}'", search_result.resource_name);
 
-            for (k, v) in &search_result.values {
-                println!("  - '{k}': '{v}'")
+                for (k, v) in &search_result.values {
+                    println!("  - '{k}': '{v}'")
+                }
             }
         }
     }
