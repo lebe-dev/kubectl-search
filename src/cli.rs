@@ -23,7 +23,7 @@ pub const IGNORE_UTF8_ERRORS_FLAG: &str = "ignore-utf8-errors";
 
 pub fn init_cli_app() -> ArgMatches {
     Command::new("kubectl-search")
-        .version("0.2.0")
+        .version("0.3.0")
         .author("Eugene Lebedev <eugene.0x90@gmail.com>")
         .about("Search tool for ConfigMaps and Secrets (Kubernetes)")
         .subcommand_required(true)
