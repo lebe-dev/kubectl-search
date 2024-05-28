@@ -70,7 +70,7 @@ pub fn search_values(
     if search_options.search_in_secrets {
         match kubectl_tool.get_resource_names(namespace, KubernetesResourceType::Secret) {
             Ok(names) => {
-                debug!("secrets received: {:?}", names);
+                debug!("secret names received: {:?}", names);
 
                 let names: Vec<String> = names.into_iter().filter(|n| {
                     let name = n.trim();
@@ -88,7 +88,7 @@ pub fn search_values(
                                 let lowercased_values = v.to_lowercase();
 
                                 if lowercased_values.contains(&mask) {
-                                    info!("- match '{k}': '{v}'");
+                                    info!("- match '{k}': '************'");
                                     let _ = &filtered_map.insert(k, v);
                                 }
                             }

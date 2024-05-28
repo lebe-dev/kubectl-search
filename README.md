@@ -33,7 +33,8 @@ Tool uses `kubectl` to read data from kubernetes.
 
 ## Safety
 
-Tool doesn't use any write or delete commands inside cluster.
+- Tool doesn't use any write or delete commands inside cluster
+- Tool doesn't log or print secret values
 
 ## Roadmap
 

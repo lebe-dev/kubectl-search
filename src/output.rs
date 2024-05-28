@@ -24,7 +24,15 @@ pub fn print_search_results(search_results: &Vec<SearchResult>, search_mask: &st
                 }
 
                 for (k, v) in &search_result.values {
-                    println!("  - '{k}': '{v}'")
+                    match search_result.resource_type {
+                        KubernetesResourceType::ConfigMap => {
+                            println!("  - '{k}': '{v}'")
+                        }
+                        KubernetesResourceType::Secret => {
+                            println!("  - '{k}': '***********'")
+                        }
+                        _ => {}
+                    }
                 }
             }
         }
