@@ -27,7 +27,7 @@ fn main() {
             let namespace = matches.get_one::<String>(NAMESPACE_ARG).unwrap();
             let search_mask = matches.get_one::<String>(SEARCH_MASK_ARG).unwrap();
 
-            println!("find configmap values in '{namespace}' namespace with mask '{search_mask}'..");
+            println!("find values in '{namespace}' namespace with mask '{search_mask}'..");
 
             let search_in_secrets = matches.get_flag(SECRETS_FLAG);
             let ignore_base64_errors = matches.get_flag(IGNORE_BASE64_ERRORS_FLAG);
