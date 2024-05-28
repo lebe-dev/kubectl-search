@@ -12,16 +12,19 @@ alias ks=kubectl-search
 # Find all configmaps values which contains search mask
 
 # ks values <namespace> <search-mask>
-$ ks values apps "backup"
+$ ks values --secrets apps "backup"
 
-- ConfigMap: app-cm
+- config-map: app-cm
   Keys:
   - 'BACKUP_SRV_HOST': 'app-backup-svc' 
   
-- ConfigMap: another-app-cm
+- config-map: another-app-cm
   Keys:
   - 'BACKUP_USER': 'app-backup-svc'
-
+  
+- secret: db-secret
+  Keys:
+  - 'BACKUP_USERNAME': 'backupper'
 ```
 
 ## How it works
@@ -34,6 +37,6 @@ Tool doesn't use any write or delete commands inside cluster.
 
 ## Roadmap
 
-1. Search values in Secrets
+1. Mask secret values by mask: PASSWORD, TOKEN 
 2. Search values in Vault secret values
 3. Support cache
