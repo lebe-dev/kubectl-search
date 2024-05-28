@@ -1,6 +1,6 @@
 # kubectl-search
 
-Search through config-maps.
+Search through config-maps and secrets (optional).
 
 ## Usage
 
@@ -9,7 +9,7 @@ export KUBECONFIG=~/.kube/demo.kubeconfig
 
 alias ks=kubectl-search
 
-# Find all configmaps values which contains search mask
+# Find all configmaps and secret values which contains search mask
 
 # ks values <namespace> <search-mask>
 $ ks values --secrets apps "backup"
