@@ -11,20 +11,17 @@ alias ks=kubectl-search
 
 # Find all configmaps and secret values which contains search mask
 
-# ks values <namespace> <search-mask>
+# ks values [OPTIONS] <namespace> <search-mask>
 $ ks values --secrets apps "backup"
 
 - config-map: app-cm
-  Keys:
   - 'BACKUP_SRV_HOST': 'app-backup-svc' 
   
 - config-map: another-app-cm
-  Keys:
   - 'BACKUP_USER': 'app-backup-svc'
   
 - secret: db-secret
-  Keys:
-  - 'BACKUP_USERNAME': 'backupper'
+  - 'BACKUP_USERNAME': '**********' # < each secret value is hidden
 ```
 
 ## How it works
