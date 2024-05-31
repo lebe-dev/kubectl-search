@@ -1,6 +1,6 @@
 # kubectl-search
 
-Search through config-maps and secrets (optional).
+Search through config-maps and secrets (optional). Resolve vault paths to values (optional).
 
 ## Usage
 
