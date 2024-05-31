@@ -60,12 +60,12 @@ fn main() {
                 search_in_secrets,
                 search_in_vault_secrets,
                 ignore_base64_errors,
-                ignore_utf8_errors,
+                ignore_utf8_errors
             };
 
             match search_values(&kubectl_tool, &kubectl_tool, &kubectl_tool, &vault_tool,
                                 &namespace, &search_mask, &search_options) {
-                Ok(search_results) => print_search_results(&search_results, &search_mask),
+                Ok(search_results) => print_search_results(&search_results, &search_mask, unmask_flag),
                 Err(e) => eprintln!("error: {}", e)
             }
         },

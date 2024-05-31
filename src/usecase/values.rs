@@ -14,7 +14,7 @@ pub struct ValuesSearchOptions {
     pub search_in_secrets: bool,
     pub search_in_vault_secrets: bool,
     pub ignore_base64_errors: bool,
-    pub ignore_utf8_errors: bool,
+    pub ignore_utf8_errors: bool
 }
 
 pub fn search_values(

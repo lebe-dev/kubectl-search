@@ -1,11 +1,13 @@
 use kubectl_wrapper_rs::KubernetesResourceType;
 
+use crate::logging::LOG_LINE_SEPARATOR;
 use crate::usecase::SearchResult;
 
-pub fn print_search_results(search_results: &Vec<SearchResult>, search_mask: &str) {
-    println!("------------------");
+pub fn print_search_results(search_results: &Vec<SearchResult>,
+                            search_mask: &str, unmask_secret_values: bool) {
+    println!("{}", LOG_LINE_SEPARATOR);
     println!("SEARCH RESULTS:");
-    println!("------------------");
+    println!("{}", LOG_LINE_SEPARATOR);
 
     if search_results.is_empty() {
         println!("no values found by mask '{search_mask}'");
@@ -29,7 +31,12 @@ pub fn print_search_results(search_results: &Vec<SearchResult>, search_mask: &st
                             println!("  - '{k}': '{v}'")
                         }
                         KubernetesResourceType::Secret => {
-                            println!("  - '{k}': '***********'")
+                            if unmask_secret_values {
+                                println!("  - '{k}': '{v}'")
+
+                            } else {
+                                println!("  - '{k}': '***********'")
+                            }
                         }
                         _ => {}
                     }
