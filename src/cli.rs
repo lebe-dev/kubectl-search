@@ -17,6 +17,9 @@ pub const NAMESPACE_ARG: &str = "namespace";
 pub const SEARCH_MASK_ARG: &str = "mask";
 
 pub const SECRETS_FLAG: &str = "secrets";
+pub const VAULT_SECRETS_FLAG: &str = "vault";
+
+pub const UNMASK_FLAG: &str = "unmask";
 
 pub const IGNORE_BASE64_ERRORS_FLAG: &str = "ignore-base64-errors";
 pub const IGNORE_UTF8_ERRORS_FLAG: &str = "ignore-utf8-errors";
@@ -47,9 +50,11 @@ pub fn init_cli_app() -> ArgMatches {
                 .about("search values by mask")
                 .arg(get_ignore_base64_errors_flag())
                 .arg(get_ignore_utf8_errors_flag())
+                .arg(get_unmask_flag())
                 .arg(get_k8s_namespace_arg())
                 .arg(get_search_mask_arg())
                 .arg(get_secrets_flag())
+                .arg(get_vault_secrets_flag())
 
         )
         .get_matches()
@@ -71,6 +76,22 @@ fn get_secrets_flag() -> Arg {
     Arg::new(SECRETS_FLAG)
         .long(SECRETS_FLAG)
         .help("search in secret values")
+        .action(ArgAction::SetTrue)
+        .required(false)
+}
+
+fn get_vault_secrets_flag() -> Arg {
+    Arg::new(VAULT_SECRETS_FLAG)
+        .long(VAULT_SECRETS_FLAG)
+        .help("try to resolve vault paths to values")
+        .action(ArgAction::SetTrue)
+        .required(false)
+}
+
+fn get_unmask_flag() -> Arg {
+    Arg::new(UNMASK_FLAG)
+        .long(UNMASK_FLAG)
+        .help("unmask secret values in output but not in logs")
         .action(ArgAction::SetTrue)
         .required(false)
 }
