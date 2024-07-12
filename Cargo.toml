@@ -1,6 +1,6 @@
 [package]
 name = "kubectl-search"
-version = "0.3.0"
+version = "1.0.0"
 edition = "2021"
 
 [profile.release]
@@ -8,6 +8,9 @@ opt-level = 'z'
 lto = true
 codegen-units = 1
 panic = 'abort'
+
+[net]
+git-fetch-with-cli=true
 
 [dependencies]
 anyhow = "1.0.86"
@@ -20,7 +23,7 @@ serde = { version = "1.0.203", features = ["derive"] }
 serde_yaml = "0.9.33"
 serde_json = "1.0.117"
 
-kubectl-wrapper-rs = { git = "https://gitlab.com/weird-crates/kubectl-wrapper-rs", version = "0.13.1", features = ["configmaps", "secrets"] }
+kubectl-wrapper-rs = { git = "https://gitlab.com/weird-crates/kubectl-wrapper-rs", version = "0.14.0", features = ["configmaps", "secrets"] }
 vault-cli-wrapper = { git = "https://gitlab.com/weird-crates/vault-cli-wrapper", version = "0.1.0" }
 
 log = "0.4.21"
