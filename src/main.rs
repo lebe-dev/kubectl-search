@@ -1,13 +1,15 @@
 use std::env;
 use std::process::exit;
+use std::sync::Arc;
 
 use clap::ArgMatches;
 use kubectl_wrapper_rs::executor::DefaultKubectlExecutor;
 use kubectl_wrapper_rs::KubectlWrapperImpl;
+use log::debug;
 use vault_cli_wrapper::DefaultVaultCliWrapper;
 use vault_cli_wrapper::executor::DefaultVaultCliExecutor;
 
-use crate::cli::{IGNORE_BASE64_ERRORS_FLAG, IGNORE_UTF8_ERRORS_FLAG, init_cli_app, init_working_dir, LOG_LEVEL_ARGUMENT, LOG_LEVEL_DEFAULT_VALUE, NAMESPACE_ARG, SEARCH_MASK_ARG, SECRETS_FLAG, UNMASK_FLAG, VAULT_SECRETS_FLAG};
+use crate::cli::{IGNORE_BASE64_ERRORS_FLAG, IGNORE_UTF8_ERRORS_FLAG, init_cli_app, init_working_dir, LOG_LEVEL_ARGUMENT, LOG_LEVEL_DEFAULT_VALUE, NAMESPACE_ARG, SEARCH_MASK_ARG, SECRETS_FLAG, UNMASK_FLAG, VALUE_MAX_LENGTH_DEFAULT_VALUE, VALUE_MAX_LENGTH_OPTION, VAULT_SECRETS_FLAG};
 use crate::logging::get_logging_config;
 use crate::output::print_search_results;
 use crate::usecase::values::{search_values, ValuesSearchOptions};
@@ -24,6 +26,8 @@ fn main() {
     init_logging(&matches);
     init_working_dir(&matches);
 
+    debug!("build {BUILD}");
+
     match matches.subcommand() {
         Some(("values", matches)) => {
             let namespace = matches.get_one::<String>(NAMESPACE_ARG).unwrap();
@@ -37,11 +41,19 @@ fn main() {
             let ignore_base64_errors = matches.get_flag(IGNORE_BASE64_ERRORS_FLAG);
             let ignore_utf8_errors = matches.get_flag(IGNORE_UTF8_ERRORS_FLAG);
 
+            let mut value_max_length = VALUE_MAX_LENGTH_DEFAULT_VALUE;
+
+            match matches.get_one::<String>(VALUE_MAX_LENGTH_OPTION) {
+                Some(value) => value_max_length = value.parse().expect(&format!("invalid '{}' value", VALUE_MAX_LENGTH_OPTION)),
+                None => {}
+            }
+
             println!("- search in secret values: {search_in_secrets}");
             println!("- search in vault secret values: {search_in_vault_secrets}");
             println!("- unmask secret values in output: {unmask_flag}");
             println!("- ignore base64 errors: {ignore_base64_errors}");
             println!("- ignore utf8 errors: {ignore_utf8_errors}");
+            println!("- value max length: {value_max_length}");
 
             if search_in_vault_secrets {
                 check_required_env_vars(&vec!["KUBECONFIG", "VAULT_ADDR", "VAULT_TOKEN"]);
@@ -51,7 +63,7 @@ fn main() {
             }
 
             let kubectl_executor = DefaultKubectlExecutor::new();
-            let kubectl_tool = KubectlWrapperImpl::new(&kubectl_executor);
+            let kubectl_tool = KubectlWrapperImpl::new(Arc::new(kubectl_executor));
 
             let vault_executor = DefaultVaultCliExecutor::new();
             let vault_tool = DefaultVaultCliWrapper::new(&vault_executor);
@@ -65,7 +77,8 @@ fn main() {
 
             match search_values(&kubectl_tool, &kubectl_tool, &kubectl_tool, &vault_tool,
                                 &namespace, &search_mask, &search_options) {
-                Ok(search_results) => print_search_results(&search_results, &search_mask, unmask_flag),
+                Ok(search_results) => print_search_results(&search_results,
+                                                       &search_mask, unmask_flag, value_max_length),
                 Err(e) => eprintln!("error: {}", e)
             }
         },

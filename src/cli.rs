@@ -21,6 +21,9 @@ pub const VAULT_SECRETS_FLAG: &str = "vault";
 
 pub const UNMASK_FLAG: &str = "unmask";
 
+pub const VALUE_MAX_LENGTH_OPTION: &str = "value-max-length";
+pub const VALUE_MAX_LENGTH_DEFAULT_VALUE: usize = 64;
+
 pub const IGNORE_BASE64_ERRORS_FLAG: &str = "ignore-base64-errors";
 pub const IGNORE_UTF8_ERRORS_FLAG: &str = "ignore-utf8-errors";
 
@@ -55,6 +58,13 @@ pub fn init_cli_app() -> ArgMatches {
                 .arg(get_search_mask_arg())
                 .arg(get_secrets_flag())
                 .arg(get_vault_secrets_flag())
+                .arg(
+                    Arg::new(VALUE_MAX_LENGTH_OPTION)
+                        .help("cut values by length (default: 64 characters)")
+                        .long(VALUE_MAX_LENGTH_OPTION)
+                        .default_value("64")
+                        .required(false)
+                )
 
         )
         .get_matches()

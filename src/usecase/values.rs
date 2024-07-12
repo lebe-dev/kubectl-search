@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use anyhow::anyhow;
 use kubectl_wrapper_rs::{KubectlWrapper, KubernetesResourceType};
 use kubectl_wrapper_rs::configmap::KubectlConfigMapWrapper;
-use kubectl_wrapper_rs::error::KubectlWrapperError;
 use kubectl_wrapper_rs::secret::KubectlSecretWrapper;
 use log::{debug, error, info, warn};
 use vault_cli_wrapper::VaultCliWrapper;

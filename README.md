@@ -54,3 +54,4 @@ $ ks --log-level=debug values --secrets --vault apps "backup"
 
 1. Mask secret values by mask: PASSWORD, TOKEN
 2. Support cache
+3. Output in json
